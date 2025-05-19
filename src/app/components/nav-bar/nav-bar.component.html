@@ -1,1 +1,30 @@
-<p>nav-bar works!</p>
+<nav class="navbar navbar-dark bg-dark py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <!-- Logo/Brand -->
+        <a class="navbar-brand fs-4 fw-bold" routerLink="/home">Zhukov</a>
+
+        <!-- Center Navigation Links -->
+        <ul class="navbar-nav flex-row gap-4">
+            <li class="nav-item">
+                <a class="nav-link text-light" routerLink="/medias">Medias</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" routerLink="/social">Social</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" routerLink="/profile">Perfil</a>
+            </li>
+        </ul>
+
+        <!-- Sign Up Button -->
+         <ul class="navbar-nav flex-row gap-4">
+            <li class="nav-item">
+                <a class="nav-link text-light" routerLink="/login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-primary fw-semibold px-4" routerLink="/signup">Sign Up</a>
+            </li>
+         </ul>
+        
+    </div>
+</nav>

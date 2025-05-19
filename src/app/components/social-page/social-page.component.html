@@ -1,0 +1,33 @@
+<app-nav-bar></app-nav-bar>
+<p>social-page works!</p>
+
+<div class="row">
+    <div class="col-3">
+        <button (click)="getUsers()" class="btn btn-success">Load Users</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-4">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Name</th>
+                    <th>UserName</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of userList; track $index) {
+                    <tr>
+                        <td>{{$index+1}}</td>
+                        <td>{{item.name}}</td>
+                        <th>{{item.nickname}}</th>
+                        <th>{{item.email}}</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
