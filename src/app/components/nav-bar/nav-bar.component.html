@@ -16,15 +16,22 @@
             </li>
         </ul>
 
-        <!-- Sign Up Button -->
-         <ul class="navbar-nav flex-row gap-4">
+        <!-- Se NÃO estiver logado, mostra Login/Sign Up -->
+        <ul class="navbar-nav flex-row gap-4" *ngIf="!authService.isLoggedIn()">
             <li class="nav-item">
                 <a class="nav-link text-light" routerLink="/login">Login</a>
             </li>
             <li class="nav-item">
                 <a class="btn btn-primary fw-semibold px-4" routerLink="/signup">Sign Up</a>
             </li>
-         </ul>
-        
+        </ul>
+
+        <!-- Se estiver logado, mostra Logout -->
+        <ul class="navbar-nav flex-row gap-4" *ngIf="authService.isLoggedIn()">
+            <li class="nav-item">
+                <button class="btn btn-danger fw-semibold px-4" (click)="logout()">Logout</button>
+            </li>
+        </ul>
+
     </div>
 </nav>

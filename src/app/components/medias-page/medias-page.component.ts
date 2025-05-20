@@ -1,12 +1,56 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Genre, GenreService } from '../../services/genre/genre.service';
+import { Media, MediaService } from '../../services/media/media.service';
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-medias-page',
-  imports: [NavBarComponent],
+  standalone: true,
+  imports: [NavBarComponent, FormsModule, CommonModule],
   templateUrl: './medias-page.component.html',
   styleUrl: './medias-page.component.scss'
 })
-export class MediasPageComponent {
+export class MediasPageComponent implements OnInit {
+
+  mediaList: Media[] = [];
+  filteredMedias: Media[] = [];
+
+  searchTerm = '';
+  selectedGenre = '';
+  genresList: Genre[] = [];
+
+  constructor(private mediaService: MediaService, private genreService: GenreService, private router: Router) {
+
+  }
+
+  ngOnInit(): void {
+    this.mediaService.getAllMedias().subscribe((data) => {
+      this.mediaList = data as Media[];
+      this.filteredMedias = this.mediaList
+    })
+
+    this.genreService.getAllMedias().subscribe((data) => {
+      this.genresList = data as Genre[];
+    })
+  }
+
+  filterMedias() {
+    this.filteredMedias = this.mediaList.filter(media => {
+      const matchesSearch = media.title.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesGenre = !this.selectedGenre || media.mediaGenres?.includes(this.selectedGenre);
+      return matchesSearch && matchesGenre;
+    });
+  }
+
+  goToMediaView(id: string) {
+    this.router.navigate(['/media', id]);
+  }
 
 }
+
+
+
+

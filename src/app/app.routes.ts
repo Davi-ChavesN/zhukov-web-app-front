@@ -5,6 +5,7 @@ import { SocialPageComponent } from './components/social-page/social-page.compon
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { SignupPageComponent } from './components/signup-page/signup-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { MediaViewPageComponent } from './components/media-view-page/media-view-page.component';
 
 export const routes: Routes = [
     {
@@ -19,6 +20,10 @@ export const routes: Routes = [
     {
         path: 'medias',
         component: MediasPageComponent
+    },
+    {
+        path: 'media/:id',
+        component: MediaViewPageComponent
     },
     {
         path: 'social',

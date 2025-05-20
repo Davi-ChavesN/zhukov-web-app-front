@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SocialPageComponent {
 
-  userList: any = [];
+  userList: User[] = [];
 
   constructor(private http: HttpClient) {
 
@@ -19,8 +19,16 @@ export class SocialPageComponent {
   getUsers() {
     this.http.get("http://localhost:3000/user/all").subscribe((data) => {
       console.log(data);
-      this.userList = data;
+      this.userList.push(...data as User[]);
     })
   }
 
+}
+
+export interface User {
+  id: string;
+  name: string;
+  nickname: string;
+  email: string;
+  birthDate: Date;
 }

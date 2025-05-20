@@ -1,2 +1,23 @@
 <app-nav-bar></app-nav-bar>
-<p>medias-page works!</p>
+<div class="container d-flex justify-content-between align-items-center">
+    <div>
+        <label>Search</label><br>
+        <input type="text" [(ngModel)]="searchTerm" (input)="filterMedias()" />
+    </div>
+    <div>
+        <label>Genre</label><br>
+        <select [(ngModel)]="selectedGenre" (change)="filterMedias()">
+            <option value="">Any</option>
+            <option *ngFor="let genre of genresList" [value]="genre">{{ genre.description }}</option>
+        </select>
+    </div>
+</div>
+
+<div class="container">
+    <div class="media-grid">
+        <div *ngFor="let media of filteredMedias" class="media-card" (click)="goToMediaView(media.id)">
+            <img [src]="media.posterUrl" alt="{{ media.title }}" class="media-image" />
+            <h5 class="media-title">{{ media.title }}</h5>
+        </div>
+    </div>
+</div>
