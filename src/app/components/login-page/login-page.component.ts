@@ -27,12 +27,10 @@ export class LoginPageComponent {
       password: this.formData.password,
     }
 
-    this.authService.userLogin(credentials).subscribe({
-      next: (Response) => {console.log('Usuário logado', Response)},
-      error: (err) => {console.error('Erro no login', err)}
+    this.authService.userLogin(credentials).subscribe(() => {
+      this.router.navigateByUrl('/profile');
     });
 
-    this.router.navigateByUrl('/profile');
     form.resetForm();
   }
 }
