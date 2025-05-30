@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
 import { HttpClient } from '@angular/common/http';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-social-page',
-  imports: [NavBarComponent],
+  imports: [NavBarComponent, FooterComponent],
   templateUrl: './social-page.component.html',
   styleUrl: './social-page.component.scss'
 })

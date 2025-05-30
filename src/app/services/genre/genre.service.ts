@@ -11,13 +11,20 @@ export class GenreService {
   private apiUrl = `${environment.apiUrl}/genre`;
   
     constructor(private http: HttpClient) { }
+
+    genreRegister(genre: CreateGenre): Observable<Genre> {
+      return this.http.post<Genre>(`${this.apiUrl}/register`, genre);
+    }
   
     getAllMedias(): Observable<Genre[]> {
-      return this.http.get<Genre[]>(`${this.apiUrl}/all`)
+      return this.http.get<Genre[]>(`${this.apiUrl}/all`);
     }
 }
 
-export interface Genre {
-  id: string; 
+export interface CreateGenre {
   description: string;
+}
+
+export interface Genre extends CreateGenre {
+  id: string; 
 }

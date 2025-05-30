@@ -5,11 +5,13 @@ import { Genre, GenreService } from '../../services/genre/genre.service';
 import { Media, MediaService } from '../../services/media/media.service';
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
 import { Router } from '@angular/router';
+import { FooterComponent } from "../footer/footer.component";
+import { MediaCardComponent } from "../media-card/media-card.component";
 
 @Component({
   selector: 'app-medias-page',
   standalone: true,
-  imports: [NavBarComponent, FormsModule, CommonModule],
+  imports: [NavBarComponent, FormsModule, CommonModule, FooterComponent, MediaCardComponent],
   templateUrl: './medias-page.component.html',
   styleUrl: './medias-page.component.scss'
 })
@@ -47,6 +49,10 @@ export class MediasPageComponent implements OnInit {
 
   goToMediaView(id: string) {
     this.router.navigate(['/media', id]);
+  }
+
+  goToCreateMediaPage() {
+    this.router.navigate(['/media-create']);
   }
 
 }

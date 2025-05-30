@@ -1,0 +1,7 @@
+<div class="card h-100 shadow-sm" (click)="goToMediaView(media.id)">
+    <img [src]="media.posterUrl || 'default.jpg'" class="card-img-top" alt="Capa da mídia" />
+    <div class="card-body">
+        <h5 class="card-title">{{ media.title }}</h5>
+        <small *ngIf="media.releaseYear">Ano: {{ media.releaseYear }}</small>
+    </div>
+</div>

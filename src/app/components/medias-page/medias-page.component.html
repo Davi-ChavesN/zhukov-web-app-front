@@ -1,23 +1,37 @@
 <app-nav-bar></app-nav-bar>
-<div class="container d-flex justify-content-between align-items-center">
-    <div>
-        <label>Search</label><br>
-        <input type="text" [(ngModel)]="searchTerm" (input)="filterMedias()" />
-    </div>
-    <div>
-        <label>Genre</label><br>
-        <select [(ngModel)]="selectedGenre" (change)="filterMedias()">
-            <option value="">Any</option>
-            <option *ngFor="let genre of genresList" [value]="genre">{{ genre.description }}</option>
-        </select>
-    </div>
-</div>
 
-<div class="container">
-    <div class="media-grid">
-        <div *ngFor="let media of filteredMedias" class="media-card" (click)="goToMediaView(media.id)">
-            <img [src]="media.posterUrl" alt="{{ media.title }}" class="media-image" />
-            <h5 class="media-title">{{ media.title }}</h5>
+<div class="vh-100">
+    <div class="container mt-3">
+
+        <div class="d-flex justify-content-between align-items-end mb-3">
+            <div class="d-flex gap-3">
+                <div class="col-4">
+                    <label class="form-label">Buscar</label>
+                    <input class="form-control" type="text" [(ngModel)]="searchTerm" (input)="filterMedias()">
+                </div>
+                <div class="col-4">
+                    <label class="form-label">Gêneros</label>
+                    <select class="form-control" [(ngModel)]="selectedGenre" (change)="filterMedias()">
+                        <option value="">Any</option>
+                        <option *ngFor="let genre of genresList" [value]="genre">{{ genre.description }}</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label class="form-label">Ano</label>
+                    <input class="form-control">
+                </div>
+            </div>
+            <div class="ms-3">
+                <button class="btn btn-primary" (click)="goToCreateMediaPage()">Adicionar Nova Mídia</button>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-3">
+            <div class="col-md-4" *ngFor="let media of filteredMedias">
+                <app-media-card [media]="media"></app-media-card>
+            </div>
         </div>
     </div>
 </div>
+
+<app-footer></app-footer>

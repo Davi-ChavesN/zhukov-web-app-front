@@ -4,10 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Media, MediaService } from '../../services/media/media.service';
 import { Review, ReviewService } from '../../services/review/review.service';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-media-view-page',
-  imports: [NavBarComponent, CommonModule],
+  imports: [NavBarComponent, CommonModule, FooterComponent],
   templateUrl: './media-view-page.component.html',
   styleUrl: './media-view-page.component.scss'
 })

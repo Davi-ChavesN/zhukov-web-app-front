@@ -4,30 +4,37 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class MediaService {
-  private apiUrl = `${environment.apiUrl}/media`;
+    private apiUrl = `${environment.apiUrl}/media`;
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  getAllMedias(): Observable<Media[]> {
-    return this.http.get<Media[]>(`${this.apiUrl}/all`)
-  }
+    mediaRegister(media: CreateMedia): Observable<Media> {
+        return this.http.post<Media>(`${this.apiUrl}/register`, media);
+    }
 
-  getMediaById(id: string): Observable<Media> {
-    return this.http.get<Media>(`${this.apiUrl}/${id}`)
-  }
+    getAllMedias(): Observable<Media[]> {
+        return this.http.get<Media[]>(`${this.apiUrl}/all`);
+    }
+
+    getMediaById(id: string): Observable<Media> {
+        return this.http.get<Media>(`${this.apiUrl}/${id}`);
+    }
 }
 
-export interface Media {
-  id: string;
-  title: string;
-  director: string;
-  releaseYear: number;
-  duration: number;
-  producer: string;
-  rating: string;
-  posterUrl: string;
-  mediaGenres: string[];
+export interface CreateMedia {
+    title: string;
+    director: string;
+    releaseYear: number;
+    duration: number;
+    producer: string;
+    rating: string;
+    posterUrl: string;
+    mediaGenres: string[];
+}
+
+export interface Media extends CreateMedia {
+    id: string;
 }

@@ -1,68 +1,45 @@
-<body class="bg-primary">
+<body class="bg-black">
     <nav class="navbar py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <a class="navbar-brand fs-4 fw-bold text-white" routerLink="/home">ZHUKOV</a>
-                </div>
-                <div class="col">
-                    <ul>
-                        <li>
-                            <a>aaaa</a>
-                        </li>
-                    </ul>
-                </div>
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <!-- Left: Logo -->
+            <div>
+                <a class="navbar-brand fs-4 fw-bold text-white" routerLink="/home">ZHUKOV</a>
             </div>
+
+            <!-- Central links -->
+            <ul class="navbar-nav flex-row gap-4">
+                <li class="nav-item">
+                    <a class="nav-link text-light" routerLink="/medias">Medias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" routerLink="/social">Social</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" routerLink="/profile">Perfil</a>
+                </li>
+            </ul>
+
+            <!-- Right: Login/Signup or Logout -->
+            <div>
+                <!-- Se NÃO estiver logado -->
+                <ul class="navbar-nav flex-row gap-4" *ngIf="!authService.isLoggedIn()">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" routerLink="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary fw-semibold px-4" routerLink="/signup">Sign Up</a>
+                    </li>
+                </ul>
+
+                <!-- Se estiver logado -->
+                <ul class="navbar-nav flex-row gap-4" *ngIf="authService.isLoggedIn()">
+                    <li class="nav-item">
+                        <button class="btn btn-danger fw-semibold px-4" (click)="logout()">Logout</button>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </nav>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<nav class="navbar navbar-dark bg-dark py-3">
-    <div class="container d-flex justify-content-between align-items-center">
-        <!-- Logo/Brand -->
-        <a class="navbar-brand fs-4 fw-bold" routerLink="/home">Zhukov</a>
-
-        <!-- Center Navigation Links -->
-        <ul class="navbar-nav flex-row gap-4">
-            <li class="nav-item">
-                <a class="nav-link text-light" routerLink="/medias">Medias</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" routerLink="/social">Social</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" routerLink="/profile">Perfil</a>
-            </li>
-        </ul>
-
-        <!-- Se NÃO estiver logado, mostra Login/Sign Up -->
-        <ul class="navbar-nav flex-row gap-4" *ngIf="!authService.isLoggedIn()">
-            <li class="nav-item">
-                <a class="nav-link text-light" routerLink="/login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="btn btn-primary fw-semibold px-4" routerLink="/signup">Sign Up</a>
-            </li>
-        </ul>
-
-        <!-- Se estiver logado, mostra Logout -->
-        <ul class="navbar-nav flex-row gap-4" *ngIf="authService.isLoggedIn()">
-            <li class="nav-item">
-                <button class="btn btn-danger fw-semibold px-4" (click)="logout()">Logout</button>
-            </li>
-        </ul>
-
-    </div>
-</nav>

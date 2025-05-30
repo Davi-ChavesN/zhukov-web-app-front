@@ -1,14 +1,32 @@
 <app-nav-bar></app-nav-bar>
-<div class="container mt-5">
+
+<div class="body-bg text-light d-flex justify-content-center align-items-center" style="min-height: 100vh; margin: 0;">
+  <div class="card form-bg text-light p-4 shadow rounded" style="min-width: 350px; max-width: 450px; width: 100%;">
+    <h2 class="text-center mb-4">Login</h2>
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
-        <div class="form-group mt-3">
-            <label>Nome de Usuário / Email</label>
-            <input type="text" class="form-control" [(ngModel)]="formData.identifier" name="name" required />
-        </div>
-        <div class="form-group mt-3">
-            <label>Senha</label>
-            <input type="password" class="form-control" [(ngModel)]="formData.password" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-primary mt-3" [disabled]="!loginForm.valid">Entrar</button>
+
+      <div class="mb-3">
+        <label for="identifier" class="form-label">Nome de Usuário / Email</label>
+        <input type="text" id="identifier" name="name" class="form-control bg-light text-black border-secondary"
+          [(ngModel)]="formData.identifier" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Senha</label>
+        <input type="password" id="password" name="password" class="form-control bg-light text-black border-secondary"
+          [(ngModel)]="formData.password" required>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary fw-semibold" [disabled]="!loginForm.valid">Entrar</button>
+      </div>
+
+      <div class="mt-3 text-center">
+        <small>Não tem uma conta? <a routerLink="/signup" class="text-info">Cadastre-se</a></small>
+      </div>
+
     </form>
+  </div>
 </div>
+
+<app-footer></app-footer>

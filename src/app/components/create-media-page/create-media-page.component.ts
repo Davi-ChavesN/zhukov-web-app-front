@@ -3,11 +3,11 @@ import { NavBarComponent } from "../nav-bar/nav-bar.component";
 import { FooterComponent } from "../footer/footer.component";
 
 @Component({
-  selector: 'app-home-page',
+  selector: 'app-create-media-page',
   imports: [NavBarComponent, FooterComponent],
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss'
+  templateUrl: './create-media-page.component.html',
+  styleUrl: './create-media-page.component.scss'
 })
-export class HomePageComponent {
+export class CreateMediaPageComponent {
 
 }
