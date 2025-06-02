@@ -22,6 +22,10 @@ export class MediaService {
     getMediaById(id: string): Observable<Media> {
         return this.http.get<Media>(`${this.apiUrl}/${id}`);
     }
+
+    mediaUpdate(id:string, media: UpdateMedia) {
+        return this.http.put<Media>(`${this.apiUrl}/update/${id}`, media);
+    }
 }
 
 export interface CreateMedia {
@@ -32,9 +36,14 @@ export interface CreateMedia {
     producer: string;
     rating: string;
     posterUrl: string;
-    mediaGenres: string[];
+    genreIds: string[];
+}
+
+export interface UpdateMedia extends CreateMedia {
+    id: string;
 }
 
 export interface Media extends CreateMedia {
     id: string;
+    mediaGenres: string[];
 }

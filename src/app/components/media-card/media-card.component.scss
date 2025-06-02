@@ -1,0 +1,35 @@
+.media-card {
+    width: 185px;
+    text-align: center;
+    background-color: #1e1e2f;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+
+.media-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+/* This gives each card a fixed vertical layout */
+.media-image {
+    width: 100%;
+    height: 278px; /* Poster-like height */
+    object-fit: cover; /* Fill the space, minimal crop */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.media-content {
+    padding: 0.5rem;
+}
+
+.media-title {
+    font-size: 0.9rem;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+    text-align: start;
+}

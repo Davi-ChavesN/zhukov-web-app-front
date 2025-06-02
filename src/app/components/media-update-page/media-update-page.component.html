@@ -4,7 +4,7 @@
     <div class="container p-4">
         <div class="row align-items-center mb-4">
             <div class="col-5 d-flex align-items-center">
-                <h2 class="text-white mb-0">Adicionar nova Mídia</h2>
+                <h2 class="text-white mb-0">Editar Mídia</h2>
                 <button type="button" class="btn btn-outline-light btn-sm ms-auto" data-bs-toggle="modal"
                     data-bs-target="#genreModal">
                     + Novo Gênero
@@ -43,6 +43,7 @@
                                 </ng-select>
                             </div>
                         </div>
+                        <app-genre-modal (genreAdded)="refreshGenres()"></app-genre-modal>
 
                         <div class="mb-3">
                             <label class="form-label text-white">Diretor</label>
@@ -80,9 +81,11 @@
                                 required>
                         </div>
 
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary fw-semibold"
-                                [disabled]="mediaForm.invalid">Criar Mídia</button>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary fw-semibold w-50"
+                                [disabled]="mediaForm.invalid">Atualizar Mídia</button>
+                            <button type="button" class="btn btn-danger fw-semibold w-50"
+                                (click)="cancelUpdate()">Cancelar</button>
                         </div>
 
                     </form>
@@ -122,6 +125,5 @@
         </div>
     </div>
 </div>
-<app-genre-modal (genreAdded)="refreshGenres()"></app-genre-modal>
 
 <app-footer></app-footer>

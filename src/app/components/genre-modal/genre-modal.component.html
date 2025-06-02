@@ -1,0 +1,21 @@
+<div class="modal fade" id="genreModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title">Adicionar Novo Gênero</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form #genreForm="ngForm" (ngSubmit)="addGenre(genreForm)">
+                    <div class="mb-3">
+                        <label for="genreDescription" class="form-label">Descrição</label>
+                        <input [(ngModel)]="formData.description" name="description" id="genreDescription" type="text"
+                            class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

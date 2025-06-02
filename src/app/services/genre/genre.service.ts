@@ -4,27 +4,31 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class GenreService {
 
-  private apiUrl = `${environment.apiUrl}/genre`;
-  
+    private apiUrl = `${environment.apiUrl}/genre`;
+
     constructor(private http: HttpClient) { }
 
     genreRegister(genre: CreateGenre): Observable<Genre> {
-      return this.http.post<Genre>(`${this.apiUrl}/register`, genre);
+        return this.http.post<Genre>(`${this.apiUrl}/register`, genre);
     }
-  
-    getAllMedias(): Observable<Genre[]> {
-      return this.http.get<Genre[]>(`${this.apiUrl}/all`);
+
+    getAllGenres(): Observable<Genre[]> {
+        return this.http.get<Genre[]>(`${this.apiUrl}/all`);
+    }
+
+    getGenreById(id: string): Observable<Genre> {
+        return this.http.get<Genre>(`${this.apiUrl}/${id}`);
     }
 }
 
 export interface CreateGenre {
-  description: string;
+    description: string;
 }
 
 export interface Genre extends CreateGenre {
-  id: string; 
+    id: string;
 }

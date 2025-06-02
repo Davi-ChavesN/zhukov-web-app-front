@@ -1,17 +1,61 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="container">
-    <img [src]="media.posterUrl" alt="{{ media.title }}" class="media-image"/>
-    <h1>{{ media.title }}</h1>
-</div>
+<div class="body-bg min-vh-100 py-4">
+    <div class="container text-white" *ngIf="media">
 
-<div class="container">
-    <div class="media-grid">
-        <div *ngFor="let review of reviews">
-            <p>{{ review.score }}</p>
-            <p>{{ review.comment }}</p>
+        <!-- Título + botão de edição (visível apenas para admin) -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>{{ media.title }}</h2>
+            <button *ngIf="authService.isLoggedIn() && authService.getLoggedUser()?.role === 'admin'"
+                class="btn btn-outline-light btn-sm" (click)="goToEditPage(media.id)">
+                Editar Mídia
+            </button>
+        </div>
+
+        <!-- Informações da mídia -->
+        <div class="row mb-5">
+            <!-- Poster -->
+            <div class="col-md-4">
+                <img [src]="media.posterUrl || 'default.jpg'" class="img-fluid rounded shadow" alt="Poster da mídia" />
+            </div>
+
+            <!-- Detalhes -->
+            <div class="col-md-8">
+                <ng-container>
+                    <p><strong>Diretor:</strong> {{ media.director }}</p>
+                    <p><strong>Ano de Lançamento:</strong> {{ media.releaseYear }}</p>
+                    <p><strong>Duração:</strong> {{ media.duration }} min</p>
+                    <p><strong>Produtor:</strong> {{ media.producer }}</p>
+                    <p><strong>Rating:</strong> {{ media.rating }}</p>
+                    <div>
+                        <strong class="me-1">Gêneros:</strong>
+                        <span *ngFor="let genre of media.mediaGenres" class="badge bg-primary me-1">{{ genre }}</span>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+
+        <!-- Avaliações Section Header -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Avaliações</h4>
+            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                Avaliar Mídia
+            </button>
+        </div>
+
+        <!-- Reviews Grid -->
+        <div class="row g-3">
+            <div class="col-md-4" *ngFor="let review of reviewsList">
+                <div class="bg-dark p-3 rounded h-100">
+                    <p class="mb-1"><strong>{{ getUserNickname(review.userId) }}</strong> - {{ review.score }}/10</p>
+                    <p class="mb-0">{{ review.comment }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<app-review-modal (reviewAdded)="refreshReviews()"></app-review-modal>
 
 <app-footer></app-footer>

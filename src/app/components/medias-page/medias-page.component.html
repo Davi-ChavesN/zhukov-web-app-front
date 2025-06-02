@@ -1,32 +1,35 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="vh-100">
-    <div class="container mt-3">
+<div class="vh-100 body-bg pt-4">
+    <div class="container">
 
         <div class="d-flex justify-content-between align-items-end mb-3">
             <div class="d-flex gap-3">
                 <div class="col-4">
-                    <label class="form-label">Buscar</label>
+                    <label class="form-label text-white">Buscar</label>
                     <input class="form-control" type="text" [(ngModel)]="searchTerm" (input)="filterMedias()">
                 </div>
                 <div class="col-4">
-                    <label class="form-label">Gêneros</label>
+                    <label class="form-label text-white">Gêneros</label>
                     <select class="form-control" [(ngModel)]="selectedGenre" (change)="filterMedias()">
                         <option value="">Any</option>
-                        <option *ngFor="let genre of genresList" [value]="genre">{{ genre.description }}</option>
+                        <option *ngFor="let genre of genresList" [value]="genre.description">{{ genre.description }}</option>
                     </select>
                 </div>
                 <div class="col-4">
-                    <label class="form-label">Ano</label>
-                    <input class="form-control">
+                    <label class="form-label text-white">Ano</label>
+                    <select class="form-control" [(ngModel)]="selectedYear" (change)="filterMedias()">
+                        <option [ngValue]="null">Todos os Anos</option>
+                        <option *ngFor="let year of getAvailableYears()" [ngValue]="year">{{ year }}</option>
+                    </select>
                 </div>
             </div>
-            <div class="ms-3">
+            <div class="ms-3" *ngIf="authService.isLoggedIn() && authService.getLoggedUser()?.role === 'admin'">
                 <button class="btn btn-primary" (click)="goToCreateMediaPage()">Adicionar Nova Mídia</button>
             </div>
         </div>
 
-        <div class="row g-4 mt-3">
+        <div class="row g-4 mt-3 media-grid">
             <div class="col-md-4" *ngFor="let media of filteredMedias">
                 <app-media-card [media]="media"></app-media-card>
             </div>

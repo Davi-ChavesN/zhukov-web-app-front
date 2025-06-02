@@ -1,35 +1,39 @@
-import { Component } from '@angular/core';
-import { NavBarComponent } from "../nav-bar/nav-bar.component";
-import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { User, UserService } from '../../services/user/user.service';
 import { FooterComponent } from "../footer/footer.component";
+import { NavBarComponent } from "../nav-bar/nav-bar.component";
 
 @Component({
-  selector: 'app-social-page',
-  imports: [NavBarComponent, FooterComponent],
-  templateUrl: './social-page.component.html',
-  styleUrl: './social-page.component.scss'
+    selector: 'app-social-page',
+    imports: [NavBarComponent, FooterComponent, CommonModule],
+    templateUrl: './social-page.component.html',
+    styleUrl: './social-page.component.scss'
 })
-export class SocialPageComponent {
+export class SocialPageComponent implements OnInit {
 
-  userList: User[] = [];
+    userList!: User[];
 
-  constructor(private http: HttpClient) {
+    constructor(
+        private userService: UserService,
+        private router: Router,
+    ) {
 
-  }
+    }
 
-  getUsers() {
-    this.http.get("http://localhost:3000/user/all").subscribe((data) => {
-      console.log(data);
-      this.userList.push(...data as User[]);
-    })
-  }
+    ngOnInit(): void {
+        this.userService.getAllusers().subscribe({
+            next: (response) => {
+                this.userList = response;
+            },
+            error: (err) => {
+                console.error('Erro ao carregar usuários: ', err);
+            }
+        });
+    }
 
-}
-
-export interface User {
-  id: string;
-  name: string;
-  nickname: string;
-  email: string;
-  birthDate: Date;
+    goToUserProfile(userId: string) {
+        this.router.navigate([]);
+    }
 }
