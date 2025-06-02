@@ -1,0 +1,10 @@
+@import url('../../app.component.scss');
+
+.review-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.review-card:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+}

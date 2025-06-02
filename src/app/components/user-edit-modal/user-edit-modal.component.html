@@ -1,0 +1,33 @@
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="reviewModalLabel">Editar Dados</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Fechar"></button>
+            </div>
+            <form (ngSubmit)="onSubmit()" class="modal-body" *ngIf="userEditData">
+                <div class="mb-3">
+                    <label class="form-label">Nome:</label>
+                    <input type="text" [(ngModel)]="userEditData.name" name="name" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Apelido:</label>
+                    <input type="text" [(ngModel)]="userEditData.nickname" name="nickname" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email:</label>
+                    <input type="email" [(ngModel)]="userEditData.email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Data de Nascimento:</label>
+                    <input type="date" [(ngModel)]="userEditData.birthDate" name="birthDate" class="form-control" required>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Atualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

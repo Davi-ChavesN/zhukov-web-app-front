@@ -1,41 +1,39 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white text-center">
-                    <h3>Perfil do Usuário</h3>
-                </div>
-                <div class="card-body" *ngIf="loggedUser; else loading">
-                    <div class="row mb-3">
-                        <div class="col-4 font-weight-bold">Nome:</div>
-                        <div class="col-8">{{ loggedUser.name }}</div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-4 font-weight-bold">Apelido:</div>
-                        <div class="col-8">{{ loggedUser.nickname }}</div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-4 font-weight-bold">Email:</div>
-                        <div class="col-8">{{ loggedUser.email }}</div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-4 font-weight-bold">Data de Nascimento:</div>
-                        <div class="col-8">{{ loggedUser.birthDate | date:'dd/MM/yyyy' }}</div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-4 font-weight-bold">Papel:</div>
-                        <div class="col-8 text-capitalize">{{ loggedUser.role }}</div>
+<div class="body-bg min-vh-100 py-5">
+    <div class="container" *ngIf="authService.isLoggedIn()">
+        <div class="row">
+            <!-- Left Column: User Info -->
+            <div class="col-md-4 mb-4">
+                <div class="card text-white bg-dark shadow">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Perfil</h4>
+                        <p><strong>Nome:</strong> {{ user.name }}</p>
+                        <p><strong>Apelido:</strong> {{ user.nickname }}</p>
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        <p><strong>Data de Nascimento:</strong> {{ user.birthDate | date:'MMMM dd, yyyy' }}</p>
+                        <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#userModal">Editar Dados</button>
                     </div>
                 </div>
-                <ng-template #loading>
-                    <div class="text-center p-4">
-                        <div class="spinner-border text-primary" role="status"></div>
-                        <p class="mt-2">Carregando perfil...</p>
+            </div>
+
+            <!-- Right Column: User Reviews -->
+            <div class="col-md-8">
+                <div class="bg-dark text-white p-4 rounded shadow">
+                    <h4 class="mb-4">Minhas Avaliações</h4>
+                    <div *ngIf="userReviews.length === 0">
+                        <p>Você ainda não fez nenhuma avaliação.</p>
                     </div>
-                </ng-template>
+                    <div *ngFor="let review of userReviews" class="mb-3 p-3 bg-secondary rounded review-card" (click)="goToMediaView(review.mediaId)">
+                        <p class="mb-1"><strong>{{ getMediaTitle(review.mediaId) }}</strong> - {{ review.score }}/10</p>
+                        <p class="mb-0">{{ review.comment }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<app-user-edit-modal (profileUpdated)="refreshProfile()"></app-user-edit-modal>
+
+<app-footer></app-footer>

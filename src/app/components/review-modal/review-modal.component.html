@@ -1,0 +1,28 @@
+<!-- Modal: Nova Avaliação -->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="reviewModalLabel">Nova Avaliação</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Fechar"></button>
+            </div>
+            <form (ngSubmit)="onSubmit()" class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Nota</label>
+                    <input type="number" [(ngModel)]="newReview.score" name="score" class="form-control" min="0" max="10"
+                        required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Comentário:</label>
+                    <textarea [(ngModel)]="newReview.comment" name="comment" class="form-control" rows="3"
+                        required></textarea>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

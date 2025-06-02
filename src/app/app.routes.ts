@@ -6,6 +6,8 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { SignupPageComponent } from './components/signup-page/signup-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { MediaViewPageComponent } from './components/media-view-page/media-view-page.component';
+import { CreateMediaPageComponent } from './components/create-media-page/create-media-page.component';
+import { MediaUpdatePageComponent } from './components/media-update-page/media-update-page.component';
 
 export const routes: Routes = [
     {
@@ -20,6 +22,14 @@ export const routes: Routes = [
     {
         path: 'medias',
         component: MediasPageComponent
+    },
+    {
+        path: 'media-create',
+        component: CreateMediaPageComponent
+    },
+    {
+        path: 'media-edit/:id',
+        component: MediaUpdatePageComponent
     },
     {
         path: 'media/:id',

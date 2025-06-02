@@ -1,0 +1,44 @@
+@import url('../../app.component.scss');
+
+::ng-deep ng-select .ng-dropdown-panel .ng-option {
+  background-color: #343a40; // Dark background
+  color: white;
+  border-bottom: 1px solid #495057;
+  padding: 8px 12px;
+  border-radius: 0.5rem;
+}
+
+::ng-deep ng-select .ng-dropdown-panel .ng-option:hover {
+  background-color: #495057; // Hover effect
+}
+
+::ng-deep .genre-pill {
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  border-radius: 12px;
+  background-color: #0d6efd;
+  color: white;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.preview-image {
+  max-width: 200px;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.ng-select {
+  background-color: #fff;
+  border-radius: 6px;
+}
+
+.ng-select .ng-select-container {
+  min-height: 40px;
+}
+
+.ng-select .ng-clear-wrapper {
+  display: none;
+}
+

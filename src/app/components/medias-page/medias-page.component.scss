@@ -1,35 +1,8 @@
+@import url('../../app.component.scss');
+
 .media-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  background-color: #0e1117; /* dark background */
-}
-
-.media-card {
-  background-color: #161b22;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.media-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
-}
-
-.media-image {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-bottom: 1px solid #2f3542;
-}
-
-.media-title {
-  text-align: center;
-  padding: 1rem;
-  font-size: 1rem;
-  color: #fff;
+    display: grid;
+    grid-gap: 28px 30px;
+    grid-template-columns: repeat(auto-fill, 185px);
+    justify-content: space-between;
 }
