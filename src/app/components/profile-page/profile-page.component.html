@@ -1,8 +1,8 @@
 <app-nav-bar></app-nav-bar>
 
 <div class="body-bg min-vh-100 py-5">
-    <div class="container" *ngIf="authService.isLoggedIn()">
-        <div class="row">
+    <div class="container">
+        <div class="row" *ngIf="authService.isLoggedIn()">
             <!-- Left Column: User Info -->
             <div class="col-md-4 mb-4">
                 <div class="card text-white bg-dark shadow">
@@ -12,21 +12,32 @@
                         <p><strong>Apelido:</strong> {{ user.nickname }}</p>
                         <p><strong>Email:</strong> {{ user.email }}</p>
                         <p><strong>Data de Nascimento:</strong> {{ user.birthDate | date:'MMMM dd, yyyy' }}</p>
-                        <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#userModal">Editar Dados</button>
+                        <div class="d-flex justify-content-around">
+                            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#userModal">Editar Dados</button>
+                            <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#passwordModal">Mudar Senha</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Right Column: User Reviews -->
-            <div class="col-md-8">
-                <div class="bg-dark text-white p-4 rounded shadow">
-                    <h4 class="mb-4">Minhas Avaliações</h4>
-                    <div *ngIf="userReviews.length === 0">
-                        <p>Você ainda não fez nenhuma avaliação.</p>
-                    </div>
-                    <div *ngFor="let review of userReviews" class="mb-3 p-3 bg-secondary rounded review-card" (click)="goToMediaView(review.mediaId)">
-                        <p class="mb-1"><strong>{{ getMediaTitle(review.mediaId) }}</strong> - {{ review.score }}/10</p>
-                        <p class="mb-0">{{ review.comment }}</p>
+            <div class="col-8 bg-dark text-white p-4 rounded shadow">
+                <h4 class="mb-4">Minhas Avaliações</h4>
+
+                <div *ngIf="userReviews.length === 0">
+                    <p>Você ainda não fez nenhuma avaliação.</p>
+                </div>
+
+                <div class="row g-3"> <!-- Add g-3 for gutters between columns and rows -->
+                    <div *ngFor="let review of userReviews" class="col-md-6">
+                        <div class="p-3 bg-secondary rounded review-card h-100" (click)="goToMediaView(review.mediaId)">
+                            <p class="mb-1">
+                                <strong>{{ getMediaTitle(review.mediaId) }}</strong> - {{ review.score }}/10
+                            </p>
+                            <p class="mb-0">{{ review.comment }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,6 +45,7 @@
     </div>
 </div>
 
-<app-user-edit-modal (profileUpdated)="refreshProfile()"></app-user-edit-modal>
+<app-user-edit-modal></app-user-edit-modal>
+<app-password-modal></app-password-modal>
 
 <app-footer></app-footer>

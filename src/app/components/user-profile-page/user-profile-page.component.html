@@ -1,0 +1,38 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="body-bg min-vh-100 py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Left Column: User Info -->
+            <div class="col-md-4 mb-4" *ngIf="user">
+                <div class="card text-white bg-dark shadow">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3"><strong>{{ user.nickname }}</strong></h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: User Reviews -->
+            <div class="col-8 bg-dark text-white p-4 rounded shadow">
+                <h4 class="mb-4">Avaliações</h4>
+
+                <div *ngIf="userReviews.length === 0">
+                    <p>Este usuário ainda não fez nenhuma avaliação.</p>
+                </div>
+
+                <div class="row g-3">
+                    <div *ngFor="let review of userReviews" class="col-md-6">
+                        <div class="p-3 bg-secondary rounded review-card h-100" (click)="goToMediaView(review.mediaId)">
+                            <p class="mb-1">
+                                <strong>{{ getMediaTitle(review.mediaId) }}</strong> - {{ review.score }}/10
+                            </p>
+                            <p class="mb-0">{{ review.comment }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

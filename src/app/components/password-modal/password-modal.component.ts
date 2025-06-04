@@ -1,26 +1,24 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../services/auth/auth.service';
+import { Component } from '@angular/core';
 import { User, UserService } from '../../services/user/user.service';
+import { AuthService } from '../../services/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { Modal } from 'bootstrap';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-user-edit-modal',
+    selector: 'app-password-modal',
     imports: [CommonModule, FormsModule],
-    templateUrl: './user-edit-modal.component.html',
-    styleUrl: './user-edit-modal.component.scss'
+    templateUrl: './password-modal.component.html',
+    styleUrl: './password-modal.component.scss'
 })
-export class UserEditModalComponent implements OnInit {
+export class PasswordModalComponent {
     userEditData!: User;
     formData = {
-        name: '',
-        nickname: '',
-        email: '',
-        birthDate: '',
-        confirmPassword: '',
+        newPassword: '',
+        confirmNewPassword: '',
+        password: ''
     }
 
     constructor(
@@ -35,13 +33,6 @@ export class UserEditModalComponent implements OnInit {
             this.userService.getUserById(this.authService.getLoggedUser()!.id).subscribe({
                 next: (user) => {
                     this.userEditData = user;
-                    this.formData = {
-                        name: user.name,
-                        nickname: user.nickname,
-                        email: user.email,
-                        birthDate: user.birthDate,
-                        confirmPassword: '',
-                    }
                 },
                 error: (err) => {
                     console.error('Erro ao buscar dados do usuário:', err);
@@ -51,10 +42,15 @@ export class UserEditModalComponent implements OnInit {
     }
 
     onSubmit() {
-        this.userService.updateUser(this.userEditData.id, this.formData).subscribe({
+        if(this.formData.newPassword !== this.formData.confirmNewPassword) {
+            this.toastr.error('As senhas não coincidem');
+            return;
+        }
+
+        this.userService.updateUserPassword(this.userEditData.id, this.formData).subscribe({
             next: (response) => {
-                this.toastr.success('Usuário atualizado com sucesso!');
-                const modalEl = document.getElementById('userModal');
+                this.toastr.success('Senha atualizada com sucesso!');
+                const modalEl = document.getElementById('passwordModal');
                 if (modalEl) {
                     const modal = Modal.getInstance(modalEl) || new Modal(modalEl);
                     modal.hide();
@@ -63,8 +59,8 @@ export class UserEditModalComponent implements OnInit {
                 this.router.navigate(['/login']);
             },
             error: (err) => {
-                this.toastr.error('Erro ao atualizar usuário');
-                console.error('Erro ao atualizar usuário: ', err);
+                this.toastr.error('Erro ao atualizar senha');
+                console.error('Erro ao atualizar senha: ', err);
             }
         })
     }

@@ -46,8 +46,8 @@
 
         <!-- Reviews Grid -->
         <div class="row g-3">
-            <div class="col-md-4" *ngFor="let review of reviewsList">
-                <div class="bg-dark p-3 rounded h-100">
+            <div class="col-md-4" *ngFor="let review of reviewsList" (click)="goToUserProfile(review.userId)">
+                <div class="bg-dark p-3 rounded h-100 review-card">
                     <p class="mb-1"><strong>{{ getUserNickname(review.userId) }}</strong> - {{ review.score }}/10</p>
                     <p class="mb-0">{{ review.comment }}</p>
                 </div>

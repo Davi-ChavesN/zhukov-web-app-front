@@ -40,7 +40,7 @@ export class SignupPageComponent {
             name: this.formData.name,
             nickname: this.formData.nickname,
             email: this.formData.email,
-            birthDate: new Date(this.formData.birthdate),
+            birthDate: this.formData.birthdate,
             password: this.formData.password,
         };
 

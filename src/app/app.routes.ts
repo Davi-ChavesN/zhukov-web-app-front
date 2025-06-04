@@ -8,6 +8,8 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { MediaViewPageComponent } from './components/media-view-page/media-view-page.component';
 import { CreateMediaPageComponent } from './components/create-media-page/create-media-page.component';
 import { MediaUpdatePageComponent } from './components/media-update-page/media-update-page.component';
+import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
+import { OutOfBoundsPageComponent } from './components/out-of-bounds-page/out-of-bounds-page.component';
 
 export const routes: Routes = [
     {
@@ -40,6 +42,10 @@ export const routes: Routes = [
         component: SocialPageComponent
     },
     {
+        path: 'user/:id',
+        component: UserProfilePageComponent
+    },
+    {
         path: 'profile',
         component: ProfilePageComponent
     },
@@ -51,4 +57,13 @@ export const routes: Routes = [
         path: 'signup',
         component: SignupPageComponent
     },
+    {
+        path: 'out-of-bounds',
+        component: OutOfBoundsPageComponent
+    },
+    {
+        path: '**',
+        redirectTo: 'out-of-bounds',
+        pathMatch: 'full'
+    }
 ];

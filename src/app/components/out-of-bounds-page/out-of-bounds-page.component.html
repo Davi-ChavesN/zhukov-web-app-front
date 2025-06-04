@@ -1,0 +1,23 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="body-bg vh-100">
+    <div class="game-container">
+        <h1>404 - Parece que você se perdeu</h1>
+        <p>Mas você pode se divertir um pouco clicando no biscoito 👇</p>
+    </div>
+    <div class="clicker-container">
+        <h2>🍪 Cookie Clicker</h2>
+        <p>Coins: {{ coins }}</p>
+        <p>Coins per click: {{ coinsPerClick }}</p>
+        <p>Auto coins/sec: {{ autoCoins }}</p>
+
+        <button (click)="clickCookie()" class="cookie-button">Click Me!</button>
+
+        <div class="upgrades">
+            <button (click)="buyClickUpgrade()">Upgrade Click (+1) - 50 coins</button>
+            <button (click)="buyAutoUpgrade()">Buy Auto Clicker (+1/s) - 100 coins</button>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

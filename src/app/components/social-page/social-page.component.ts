@@ -34,6 +34,6 @@ export class SocialPageComponent implements OnInit {
     }
 
     goToUserProfile(userId: string) {
-        this.router.navigate([]);
+        this.router.navigate(['user', userId]);
     }
 }

@@ -7,10 +7,12 @@ import { Review, ReviewService } from '../../services/review/review.service';
 import { MediaService } from '../../services/media/media.service';
 import { Router } from '@angular/router';
 import { UserEditModalComponent } from "../user-edit-modal/user-edit-modal.component";
+import { ToastrService } from 'ngx-toastr';
+import { PasswordModalComponent } from "../password-modal/password-modal.component";
 
 @Component({
     selector: 'app-profile-page',
-    imports: [NavBarComponent, CommonModule, FooterComponent, UserEditModalComponent],
+    imports: [NavBarComponent, CommonModule, FooterComponent, UserEditModalComponent, PasswordModalComponent],
     templateUrl: './profile-page.component.html',
     styleUrl: './profile-page.component.scss'
 })
@@ -21,15 +23,15 @@ export class ProfilePageComponent implements OnInit {
 
     constructor(
         readonly authService: AuthService,
-        private reviewService: ReviewService,
-        private mediaService: MediaService,
-        private router: Router,
+        private readonly reviewService: ReviewService,
+        private readonly mediaService: MediaService,
+        private readonly router: Router,
+        private readonly toastr: ToastrService,
     ) { }
 
     ngOnInit(): void {
         if (this.authService.isLoggedIn()) {
             const userData = this.authService.getLoggedUser();
-            console.log(userData?.birthDate);
 
             this.user = userData!;
 
@@ -43,16 +45,10 @@ export class ProfilePageComponent implements OnInit {
                     }
                 });
             }
+        } else {
+            this.toastr.info('Você precisa estar logado para acessar seu perfil!');
+            this.router.navigate(['/login']);
         }
-    }
-
-    editProfile() {
-        // Navega para página de edição ou abre modal
-        console.log('Editar perfil');
-    }
-
-    refreshProfile() {
-        
     }
 
     getMediaTitle(mediaId: string) {
