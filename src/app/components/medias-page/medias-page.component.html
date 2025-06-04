@@ -12,7 +12,7 @@
                 <div class="col-4">
                     <label class="form-label text-white">Gêneros</label>
                     <select class="form-control" [(ngModel)]="selectedGenre" (change)="filterMedias()">
-                        <option value="">Any</option>
+                        <option value="">Todos os Gêneros</option>
                         <option *ngFor="let genre of genresList" [value]="genre.description">{{ genre.description }}</option>
                     </select>
                 </div>

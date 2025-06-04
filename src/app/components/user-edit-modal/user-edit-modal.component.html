@@ -9,19 +9,24 @@
             <form (ngSubmit)="onSubmit()" class="modal-body" *ngIf="userEditData">
                 <div class="mb-3">
                     <label class="form-label">Nome:</label>
-                    <input type="text" [(ngModel)]="userEditData.name" name="name" class="form-control" required />
+                    <input type="text" [(ngModel)]="formData.name" name="name" class="form-control" required />
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Apelido:</label>
-                    <input type="text" [(ngModel)]="userEditData.nickname" name="nickname" class="form-control" required>
+                    <input type="text" [(ngModel)]="formData.nickname" name="nickname" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email:</label>
-                    <input type="email" [(ngModel)]="userEditData.email" name="email" class="form-control" required>
+                    <input type="email" [(ngModel)]="formData.email" name="email" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Data de Nascimento:</label>
-                    <input type="date" [(ngModel)]="userEditData.birthDate" name="birthDate" class="form-control" required>
+                    <input type="date" [(ngModel)]="formData.birthDate" name="birthDate" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Informe sua Senha:</label>
+                    <input type="password" [(ngModel)]="formData.confirmPassword" name="confirmPassword"
+                        class="form-control" required>
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>

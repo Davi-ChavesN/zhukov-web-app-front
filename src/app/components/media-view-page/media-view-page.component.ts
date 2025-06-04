@@ -79,4 +79,8 @@ export class MediaViewPageComponent implements OnInit {
             return 'Carregando...';
         }
     }
+
+    goToUserProfile(userId: string) {
+        this.router.navigate(['user', userId]);
+    }
 }

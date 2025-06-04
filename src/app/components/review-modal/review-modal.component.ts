@@ -3,7 +3,7 @@ import { Review, ReviewService } from '../../services/review/review.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService, LoggedUser } from '../../services/auth/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Modal } from 'bootstrap';
 
@@ -28,10 +28,11 @@ export class ReviewModalComponent implements OnInit {
     @Output() reviewAdded = new EventEmitter<void>();
 
     constructor(
-        private authService: AuthService,
-        private reviewService: ReviewService,
-        private route: ActivatedRoute,
-        private toastr: ToastrService,
+        private readonly authService: AuthService,
+        private readonly reviewService: ReviewService,
+        private readonly route: ActivatedRoute,
+        private readonly toastr: ToastrService,
+        private readonly router: Router,
     ) { }
 
     ngOnInit(): void {
@@ -45,17 +46,7 @@ export class ReviewModalComponent implements OnInit {
             this.newReview.mediaId = this.route.snapshot.paramMap.get('id')!;
             this.newReview.userId = this.user.id;
 
-            this.reviewService.getReviewById(this.newReview.userId, this.newReview.mediaId).subscribe({
-                next: (data) => {
-                    if (data) {
-                        this.existingReview = true;
-                        this.newReview = data as Review;
-                    }
-                },
-                error: (err) => {
-                    console.error('Erro ao buscar existência de avaliação: ', err);
-                }
-            })
+            this.verifyExistingReview();
         }
     }
 
@@ -79,6 +70,7 @@ export class ReviewModalComponent implements OnInit {
                     this.toastr.success('Avaliação atualizada com sucesso!');
                     this.reviewAdded.emit();
                     this.modal?.hide();
+                    this.verifyExistingReview();
                 },
                 error: (err) => {
                     this.toastr.error('Erro ao atualizar avaliação!');
@@ -92,6 +84,7 @@ export class ReviewModalComponent implements OnInit {
                     this.toastr.success('Avaliação enviada com sucesso!');
                     this.reviewAdded.emit();
                     this.modal?.hide();
+                    this.verifyExistingReview();
                 },
                 error: (err) => {
                     this.toastr.error('Erro ao enviar avaliação!');
@@ -100,5 +93,19 @@ export class ReviewModalComponent implements OnInit {
                 }
             });
         }
+    }
+
+    verifyExistingReview() {
+        this.reviewService.getReviewById(this.newReview.userId, this.newReview.mediaId).subscribe({
+            next: (data) => {
+                if (data) {
+                    this.existingReview = true;
+                    this.newReview = data as Review;
+                }
+            },
+            error: (err) => {
+                console.error('Erro ao buscar existência de avaliação: ', err);
+            }
+        });
     }
 }
