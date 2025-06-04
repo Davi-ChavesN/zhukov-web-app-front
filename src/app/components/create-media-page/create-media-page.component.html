@@ -1,6 +1,6 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="body-bg vh-100 overflow-auto">
+<div class="body-bg min-vh-100">
     <div class="container p-4">
         <div class="row align-items-center mb-4">
             <div class="col-5 d-flex align-items-center">
@@ -22,7 +22,10 @@
                             <div class="mb-3 col-6">
                                 <label class="form-label text-white">Título</label>
                                 <input class="form-control" type="text" [(ngModel)]="formData.title" name="title"
-                                    required>
+                                    required #title="ngModel">
+                                <div *ngIf="title.invalid && title.touched" class="text-danger">
+                                    Título é obrigatório.
+                                </div>
                             </div>
 
                             <div class="mb-3 col-6">
@@ -31,7 +34,8 @@
                                     bindValue="id" [(ngModel)]="formData.genreIds" [multiple]="true"
                                     [closeOnSelect]="false" [searchable]="true" [hideSelected]="true"
                                     [clearable]="false" class="genre-select text-white form-control"
-                                    placeholder="Selecione os gêneros" required>
+                                    placeholder="Selecione os gêneros" #mediaGenres="ngModel"
+                                    (blur)="touchedGenres = true">
                                     <ng-template ng-label-tmp let-item="item">
                                         <span class="badge bg-primary me-1 genre-pill" (click)="removeGenre(item.id)">
                                             {{ item.description }} ✕
@@ -41,43 +45,65 @@
                                         {{ item.description }}
                                     </ng-template>
                                 </ng-select>
+                                <div *ngIf="touchedGenres && (!formData.genreIds || formData.genreIds.length === 0)"
+                                    class="text-danger mt-1">
+                                    Pelo menos um gênero deve ser selecionado.
+                                </div>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label text-white">Diretor</label>
                             <input class="form-control" type="text" [(ngModel)]="formData.director" name="director"
-                                required>
+                                required #director="ngModel">
+                            <div *ngIf="director.invalid && director.touched" class="text-danger">
+                                Diretor é obrigatório.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label text-white">Ano de Lançamento</label>
                             <input class="form-control" type="number" [(ngModel)]="formData.releaseYear"
-                                name="releaseYear" required>
+                                name="releaseYear" required #releaseYear="ngModel">
+                            <div *ngIf="releaseYear.invalid && releaseYear.touched" class="text-danger">
+                                Ano de lançamento é obrigatório.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label text-white">Duração (min)</label>
                             <input class="form-control" type="number" [(ngModel)]="formData.duration" name="duration"
-                                required>
+                                required #duration="ngModel">
+                            <div *ngIf="duration.invalid && duration.touched" class="text-danger">
+                                Duração é obrigatório.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label text-white">Produtor</label>
                             <input class="form-control" type="text" [(ngModel)]="formData.producer" name="producer"
-                                required>
+                                required #producer="ngModel">
+                            <div *ngIf="producer.invalid && producer.touched" class="text-danger">
+                                Produtor é obrigatório.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label text-white">Rating</label>
-                            <input class="form-control" type="text" [(ngModel)]="formData.rating" name="rating"
-                                required>
+                            <input class="form-control" type="text" [(ngModel)]="formData.rating" name="rating" required
+                                #rating="ngModel">
+                            <div *ngIf="rating.invalid && rating.touched" class="text-danger">
+                                Rating é obrigatório.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label text-white">Poster URL</label>
                             <input class="form-control" type="text" [(ngModel)]="formData.posterUrl" name="posterUrl"
-                                required>
+                                required #posterUrl="ngModel">
+                            <div *ngIf="posterUrl.invalid && posterUrl.touched" class="text-danger">
+                                Poster URL é obrigatório.
+                            </div>
                         </div>
 
                         <div class="d-grid">

@@ -27,6 +27,7 @@ export class CreateMediaPageComponent implements OnInit {
         posterUrl: '',
         genreIds: [] as string[],
     }
+    touchedGenres: boolean = false;
 
     constructor(
         private mediaService: MediaService,
