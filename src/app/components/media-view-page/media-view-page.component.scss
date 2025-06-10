@@ -1,5 +1,11 @@
 @import url('../../app.component.scss');
 
+// * {
+//     border-style: solid;
+//     border-color: red;
+//     border-width: 1px;
+// }
+
 .review-card {
     transition: transform 0.2s ease-in-out;
 }
@@ -7,4 +13,47 @@
 .review-card:hover {
     cursor: pointer;
     transform: scale(1.02);
+}
+
+.header {
+    background-color: #181d27;
+    height: 300px;
+    color: white;
+}
+
+.container-head {
+    display: grid;
+    column-gap: 30px;
+    grid-template-columns: 200px auto;
+}
+
+.media-banner {
+    background-position: 50% 35%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+    z-index: 1;
+}
+
+.media-poster {
+    position: relative;
+    top: -80px;
+    z-index: 2;
+}
+
+.poster-img {
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+}
+
+.trailer {
+    width: 500px;
+}
+
+.trailer iframe {
+    border-radius: 20px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

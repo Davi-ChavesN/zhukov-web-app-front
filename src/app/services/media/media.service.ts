@@ -30,12 +30,15 @@ export class MediaService {
 
 export interface CreateMedia {
     title: string;
+    description: string;
     director: string;
     releaseYear: number;
     duration: number;
     producer: string;
-    rating: string;
+    score: number;
     posterUrl: string;
+    bannerUrl: string;
+    trailerUrl: string;
     genreIds: string[];
 }
 

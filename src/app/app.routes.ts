@@ -10,6 +10,8 @@ import { CreateMediaPageComponent } from './components/create-media-page/create-
 import { MediaUpdatePageComponent } from './components/media-update-page/media-update-page.component';
 import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
 import { OutOfBoundsPageComponent } from './components/out-of-bounds-page/out-of-bounds-page.component';
+import { AdminGuard } from './services/auth/admin.guard';
+import { AuthGuard } from './services/auth/auth.guard';
 
 export const routes: Routes = [
     {
@@ -27,11 +29,13 @@ export const routes: Routes = [
     },
     {
         path: 'media-create',
-        component: CreateMediaPageComponent
+        component: CreateMediaPageComponent,
+        canActivate: [AdminGuard]
     },
     {
         path: 'media-edit/:id',
-        component: MediaUpdatePageComponent
+        component: MediaUpdatePageComponent,
+        canActivate: [AdminGuard]
     },
     {
         path: 'media/:id',
@@ -39,15 +43,18 @@ export const routes: Routes = [
     },
     {
         path: 'social',
-        component: SocialPageComponent
+        component: SocialPageComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'user/:id',
-        component: UserProfilePageComponent
+        component: UserProfilePageComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'profile',
-        component: ProfilePageComponent
+        component: ProfilePageComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'login',

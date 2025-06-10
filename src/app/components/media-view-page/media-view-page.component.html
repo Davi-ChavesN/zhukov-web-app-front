@@ -1,51 +1,61 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="body-bg min-vh-100 py-4">
-    <div class="container text-white" *ngIf="media">
-
-        <!-- Título + botão de edição (visível apenas para admin) -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>{{ media.title }}</h2>
-            <button *ngIf="authService.isLoggedIn() && authService.getLoggedUser()?.role === 'admin'"
-                class="btn btn-outline-light btn-sm" (click)="goToEditPage(media.id)">
-                Editar Mídia
-            </button>
-        </div>
-
-        <!-- Informações da mídia -->
-        <div class="row mb-5">
-            <!-- Poster -->
-            <div class="col-md-4">
-                <img [src]="media.posterUrl || 'default.jpg'" class="img-fluid rounded shadow" alt="Poster da mídia" />
+<div class="body-bg min-vh-100">
+    <div class="media-banner" [ngStyle]="{'background-image': 'url(' + (media.bannerUrl) + ')'}">
+    </div>
+    <div class="header">
+        <div class="container-head container">
+            <div class="media-poster">
+                <img class="poster-img" [src]="media.posterUrl" alt="{{ media.title}}" />
             </div>
-
-            <!-- Detalhes -->
-            <div class="col-md-8">
-                <ng-container>
-                    <p><strong>Diretor:</strong> {{ media.director }}</p>
-                    <p><strong>Ano de Lançamento:</strong> {{ media.releaseYear }}</p>
-                    <p><strong>Duração:</strong> {{ media.duration }} min</p>
-                    <p><strong>Produtor:</strong> {{ media.producer }}</p>
-                    <p><strong>Rating:</strong> {{ media.rating }}</p>
+            <div class="row py-3">
+                <div class="col d-flex align-items-center justify-content-between">
                     <div>
-                        <strong class="me-1">Gêneros:</strong>
-                        <span *ngFor="let genre of media.mediaGenres" class="badge bg-primary me-1">{{ genre }}</span>
+                        <h2>{{ media.title }}</h2>
                     </div>
-                </ng-container>
-
+                    <div>
+                        <button *ngIf="authService.isLoggedIn() && authService.getLoggedUser()?.role === 'admin'"
+                            class="btn btn-outline-light btn-sm ms-auto" (click)="goToEditPage(media.id)">
+                            Editar Mídia
+                        </button>
+                    </div>
+                </div>
+                <p>{{ media.description }}</p>
             </div>
         </div>
-
-        <!-- Avaliações Section Header -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0">Avaliações</h4>
+    </div>
+    <div class="container text-white d-flex">
+        <ng-container *ngIf="getYoutubeEmbedUrl() as videoUrl">
+            <div class="ratio ratio-16x9 my-3 trailer me-3">
+                <iframe [src]="videoUrl | safe" title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </ng-container>
+        <div class="mt-3">
+            <p><strong>Ano: </strong> {{media.releaseYear}} </p>
+            <p><strong>Duração: </strong> {{media.duration}} min </p>
+            <p><strong>Diretor: </strong> {{media.director}} </p>
+            <p><strong>Produtor: </strong> {{media.producer}} </p>
+            <p><strong>Nota: </strong> {{reviewsList.length > 0 ? media.score : '---'}} </p>
+            <div *ngIf="media.mediaGenres?.length" class="mt-2">
+                <strong class="me-1">Gêneros:</strong>
+                <span *ngFor="let genre of media.mediaGenres" class="badge bg-primary me-1">
+                    {{ genre }}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="container justify-content-between text-white py-3">
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+            <h4 class="mb-0">Avaliações ({{ reviewsList.length }})</h4>
             <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#reviewModal">
                 Avaliar Mídia
             </button>
         </div>
 
-        <!-- Reviews Grid -->
-        <div class="row g-3">
+        <div class="row g-3 mb-3">
             <div class="col-md-4" *ngFor="let review of reviewsList" (click)="goToUserProfile(review.userId)">
                 <div class="bg-dark p-3 rounded h-100 review-card">
                     <p class="mb-1"><strong>{{ getUserNickname(review.userId) }}</strong> - {{ review.score }}/10</p>
@@ -57,5 +67,4 @@
 </div>
 
 <app-review-modal (reviewAdded)="refreshReviews()"></app-review-modal>
-
 <app-footer></app-footer>

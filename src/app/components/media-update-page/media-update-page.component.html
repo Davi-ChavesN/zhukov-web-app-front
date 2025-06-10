@@ -22,7 +22,10 @@
                             <div class="mb-3 col-6">
                                 <label class="form-label text-white">Título</label>
                                 <input class="form-control" type="text" [(ngModel)]="formData.title" name="title"
-                                    required>
+                                    required #title="ngModel">
+                                <div *ngIf="title.invalid && title.touched" class="text-danger">
+                                    Título é obrigatório.
+                                </div>
                             </div>
 
                             <div class="mb-3 col-6">
@@ -31,7 +34,8 @@
                                     bindValue="id" [(ngModel)]="formData.genreIds" [multiple]="true"
                                     [closeOnSelect]="false" [searchable]="true" [hideSelected]="true"
                                     [clearable]="false" class="genre-select text-white form-control"
-                                    placeholder="Selecione os gêneros" required>
+                                    placeholder="Selecione os gêneros" #mediaGenres="ngModel"
+                                    (blur)="touchedGenres = true">
                                     <ng-template ng-label-tmp let-item="item">
                                         <span class="badge bg-primary me-1 genre-pill" (click)="removeGenre(item.id)">
                                             {{ item.description }} ✕
@@ -41,44 +45,85 @@
                                         {{ item.description }}
                                     </ng-template>
                                 </ng-select>
+                                <div *ngIf="touchedGenres && (!formData.genreIds || formData.genreIds.length === 0)"
+                                    class="text-danger mt-1">
+                                    Pelo menos um gênero deve ser selecionado.
+                                </div>
                             </div>
                         </div>
-                        <app-genre-modal (genreAdded)="refreshGenres()"></app-genre-modal>
+
+                        <div class="mb-3">
+                            <label class="form-label text-white">Descrição</label>
+                            <textarea class="form-control" type="text" [(ngModel)]="formData.description"
+                                name="description" required #description="ngModel" rows="3"></textarea>
+                            <div *ngIf="description.invalid && description.touched" class="text-danger">
+                                Descrição é obrigatório.
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="mb-3 col-6">
+                                <label class="form-label text-white">Ano de Lançamento</label>
+                                <input class="form-control" type="number" [(ngModel)]="formData.releaseYear"
+                                    name="releaseYear" required #releaseYear="ngModel">
+                                <div *ngIf="releaseYear.invalid && releaseYear.touched" class="text-danger">
+                                    Ano de lançamento é obrigatório.
+                                </div>
+                            </div>
+
+                            <div class="mb-3 col-6">
+                                <label class="form-label text-white">Duração (min)</label>
+                                <input class="form-control" type="number" [(ngModel)]="formData.duration"
+                                    name="duration" required #duration="ngModel">
+                                <div *ngIf="duration.invalid && duration.touched" class="text-danger">
+                                    Duração é obrigatório.
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="mb-3">
                             <label class="form-label text-white">Diretor</label>
                             <input class="form-control" type="text" [(ngModel)]="formData.director" name="director"
-                                required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label text-white">Ano de Lançamento</label>
-                            <input class="form-control" type="number" [(ngModel)]="formData.releaseYear"
-                                name="releaseYear" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label text-white">Duração (min)</label>
-                            <input class="form-control" type="number" [(ngModel)]="formData.duration" name="duration"
-                                required>
+                                required #director="ngModel">
+                            <div *ngIf="director.invalid && director.touched" class="text-danger">
+                                Diretor é obrigatório.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label text-white">Produtor</label>
                             <input class="form-control" type="text" [(ngModel)]="formData.producer" name="producer"
-                                required>
+                                required #producer="ngModel">
+                            <div *ngIf="producer.invalid && producer.touched" class="text-danger">
+                                Produtor é obrigatório.
+                            </div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label text-white">Rating</label>
-                            <input class="form-control" type="text" [(ngModel)]="formData.rating" name="rating"
-                                required>
+                            <label class="form-label text-white">Banner URL</label>
+                            <input class="form-control" type="url" [(ngModel)]="formData.bannerUrl" name="bannerUrl"
+                                required #bannerUrl="ngModel">
+                            <div *ngIf="bannerUrl.invalid && bannerUrl.touched" class="text-danger">
+                                Banner URL é obrigatório.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label text-white">Poster URL</label>
-                            <input class="form-control" type="text" [(ngModel)]="formData.posterUrl" name="posterUrl"
-                                required>
+                            <input class="form-control" type="url" [(ngModel)]="formData.posterUrl" name="posterUrl"
+                                required #posterUrl="ngModel">
+                            <div *ngIf="posterUrl.invalid && posterUrl.touched" class="text-danger">
+                                Poster URL é obrigatório.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-white">Trailer URL</label>
+                            <input class="form-control" type="url" [(ngModel)]="formData.trailerUrl" name="trailerUrl"
+                                required #trailerUrl="ngModel">
+                            <div *ngIf="trailerUrl.invalid && trailerUrl.touched" class="text-danger">
+                                Trailer URL é obrigatório.
+                            </div>
                         </div>
 
                         <div class="d-flex gap-2">
@@ -96,27 +141,42 @@
                 <div class="card bg-dark text-white shadow p-3 rounded">
                     <h5 class="mb-3">Pré-visualização</h5>
 
-                    <div class="d-flex">
-                        <div class="me-3">
-                            <img *ngIf="formData.posterUrl" [src]="formData.posterUrl" alt="Poster"
-                                class="img-fluid rounded preview-image" />
-                        </div>
-
-                        <div class="flex-grow-1">
-                            <h4 class="mb-2">{{ formData.title || 'Título da Mídia' }}</h4>
-                            <p class="mb-1"><strong>Diretor:</strong> {{ formData.director || 'Desconhecido' }}</p>
-                            <p class="mb-1"><strong>Ano:</strong> {{ formData.releaseYear || '---' }}</p>
-                            <p class="mb-1"><strong>Duração:</strong> {{ formData.duration ? formData.duration + ' min'
-                                : '---' }}</p>
-                            <p class="mb-1"><strong>Produtor:</strong> {{ formData.producer || '---' }}</p>
-                            <p class="mb-1"><strong>Rating:</strong> {{ formData.rating || '---' }}</p>
-
-                            <div *ngIf="formData.genreIds?.length" class="mt-2">
-                                <strong class="me-1">Gêneros:</strong>
-                                <span *ngFor="let genreId of formData.genreIds" class="badge bg-primary me-1">
-                                    {{ getGenreName(genreId) }}
-                                </span>
+                    <div *ngIf="formData.bannerUrl" class="media-banner"
+                        [ngStyle]="{'background-image': 'url(' + (formData.bannerUrl) + ')'}">
+                    </div>
+                    <div *ngIf="formData.title || formData.description || formData.posterUrl" class="header">
+                        <div class="container-preview">
+                            <div *ngIf="formData.posterUrl" class="media-poster">
+                                <img class="poster-img" [src]="formData.posterUrl" alt="poster" />
                             </div>
+                            <div>
+                                <h1>{{ formData.title }}</h1>
+                                <p class="description-preview">{{ formData.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container body-bg py-3">
+                        <div class="row">
+                            <div class="col-3">
+                                <p><strong>Ano: </strong>{{ formData.releaseYear || '---' }}</p>
+                            </div>
+                            <div class="col-3">
+                                <p><strong>Duração: </strong>{{ formData.duration ? formData.duration + '
+                                    min'
+                                    : '---' }}</p>
+                            </div>
+                            <div class="col-3">
+                                <p class="mb-1"><strong>Diretor:</strong> {{ formData.director || '---' }}</p>
+                            </div>
+                            <div class="col-3">
+                                <p class="mb-1"><strong>Produtor:</strong> {{ formData.producer || '---' }}</p>
+                            </div>
+                        </div>
+                        <div *ngIf="formData.genreIds?.length" class="mt-2">
+                            <strong class="me-1">Gêneros:</strong>
+                            <span *ngFor="let genreId of formData.genreIds" class="badge bg-primary me-1">
+                                {{ getGenreName(genreId) }}
+                            </span>
                         </div>
                     </div>
 
@@ -125,5 +185,6 @@
         </div>
     </div>
 </div>
+<app-genre-modal (genreAdded)="refreshGenres()"></app-genre-modal>
 
 <app-footer></app-footer>
