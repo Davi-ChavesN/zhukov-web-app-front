@@ -12,6 +12,8 @@ import { UserProfilePageComponent } from './components/user-profile-page/user-pr
 import { OutOfBoundsPageComponent } from './components/out-of-bounds-page/out-of-bounds-page.component';
 import { AdminGuard } from './services/auth/admin.guard';
 import { AuthGuard } from './services/auth/auth.guard';
+import { UserControlPageComponent } from './components/user-control-page/user-control-page.component';
+import { RootGuard } from './services/auth/root.guard';
 
 export const routes: Routes = [
     {
@@ -50,6 +52,11 @@ export const routes: Routes = [
         path: 'user/:id',
         component: UserProfilePageComponent,
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'user-control',
+        component: UserControlPageComponent,
+        canActivate: [RootGuard]
     },
     {
         path: 'profile',

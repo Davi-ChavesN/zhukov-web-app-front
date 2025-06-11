@@ -41,7 +41,7 @@ export class LoginPageComponent {
             },
             error: (err) => {
                 console.error('Erro ao realizar login', err);
-                this.toastr.error('Erro ao realizar login. Verifique suas credenciais.');
+                this.toastr.error(`Erro ao realizar Login: ${err.error.clientMessage}`);
             }
         });
     }

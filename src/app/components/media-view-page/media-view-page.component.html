@@ -1,6 +1,6 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="body-bg min-vh-100">
+<div class="body-bg min-vh-100" *ngIf="media">
     <div class="media-banner" [ngStyle]="{'background-image': 'url(' + (media.bannerUrl) + ')'}">
     </div>
     <div class="header">

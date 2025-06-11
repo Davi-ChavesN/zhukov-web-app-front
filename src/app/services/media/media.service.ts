@@ -24,7 +24,7 @@ export class MediaService {
     }
 
     mediaUpdate(id:string, media: UpdateMedia) {
-        return this.http.put<Media>(`${this.apiUrl}/update/${id}`, media);
+        return this.http.patch<Media>(`${this.apiUrl}/update/${id}`, media);
     }
 }
 
@@ -42,8 +42,19 @@ export interface CreateMedia {
     genreIds: string[];
 }
 
-export interface UpdateMedia extends CreateMedia {
+export interface UpdateMedia {
     id: string;
+    title?: string;
+    description?: string;
+    director?: string;
+    releaseYear?: number;
+    duration?: number;
+    producer?: string;
+    score?: number;
+    posterUrl?: string;
+    bannerUrl?: string;
+    trailerUrl?: string;
+    genreIds?: string[];
 }
 
 export interface Media extends CreateMedia {

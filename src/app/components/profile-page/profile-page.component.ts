@@ -9,10 +9,11 @@ import { Router } from '@angular/router';
 import { UserEditModalComponent } from "../user-edit-modal/user-edit-modal.component";
 import { ToastrService } from 'ngx-toastr';
 import { PasswordModalComponent } from "../password-modal/password-modal.component";
+import { DisableAccountModalComponent } from "../disable-account-modal/disable-account-modal.component";
 
 @Component({
     selector: 'app-profile-page',
-    imports: [NavBarComponent, CommonModule, FooterComponent, UserEditModalComponent, PasswordModalComponent],
+    imports: [NavBarComponent, CommonModule, FooterComponent, UserEditModalComponent, PasswordModalComponent, DisableAccountModalComponent],
     templateUrl: './profile-page.component.html',
     styleUrl: './profile-page.component.scss'
 })

@@ -44,8 +44,6 @@ export class SignupPageComponent {
             password: this.formData.password,
         };
 
-        console.log('Usuário criado:', user);
-
         this.userService.userRegister(user).subscribe({
             next: (response) => {
                 this.toastr.success('Usuário registrado com sucesso');
@@ -54,7 +52,7 @@ export class SignupPageComponent {
             },
             error: (err) => {
                 console.error('Erro no registro', err);
-                this.toastr.error('Erro ao registrar usuário');
+                this.toastr.error(`Erro ao registrar usuário: ${err.error.clientMessage}`);
             }
         });
     }

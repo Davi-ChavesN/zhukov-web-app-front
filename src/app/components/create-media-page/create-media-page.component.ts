@@ -59,7 +59,6 @@ export class CreateMediaPageComponent implements OnInit {
             genreIds: this.formData.genreIds,
         }
 
-        console.log('Mídia criada: ', media);
         this.mediaService.mediaRegister(media).subscribe({
             next: (response) => {
                 this.toastr.success('Mídia registrada com sucesso');

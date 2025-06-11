@@ -31,6 +31,18 @@ export class UserService {
     updateUserPassword(id: string, userPassword: UpdateUserPassword): Observable<User> {
         return this.http.put<User>(`${this.apiUrl}/update-password/${id}`, userPassword);
     }
+
+    disableUser(id: string): Observable<User> {
+        return this.http.delete<User>(`${this.apiUrl}/delete/${id}`);
+    }
+
+    enableUser(id: string): Observable<User> {
+        return this.http.patch<User>(`${this.apiUrl}/enable/${id}`, {});
+    }
+
+    updateUserRole(id: string, dto: updateUserRole): Observable<User> {
+        return this.http.patch<User>(`${this.apiUrl}/update-role/${id}`, dto);
+    }
 }
 
 export interface CreateUser {
@@ -43,6 +55,8 @@ export interface CreateUser {
 
 export interface User extends CreateUser {
     id: string;
+    status: string;
+    userRole: string;
 }
 
 export interface UpdateUser {
@@ -51,10 +65,16 @@ export interface UpdateUser {
     email: string;
     birthDate: string;
     confirmPassword: string;
+    userRole: string;
 }
 
 export interface UpdateUserPassword {
     newPassword: string;
     confirmNewPassword: string;
     password: string;
+}
+
+export interface updateUserRole {
+    id: string;
+    userRole: string;
 }

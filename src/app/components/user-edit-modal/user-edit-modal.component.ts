@@ -21,6 +21,7 @@ export class UserEditModalComponent implements OnInit {
         email: '',
         birthDate: '',
         confirmPassword: '',
+        userRole: ''
     }
 
     constructor(
@@ -41,6 +42,7 @@ export class UserEditModalComponent implements OnInit {
                         email: user.email,
                         birthDate: user.birthDate,
                         confirmPassword: '',
+                        userRole: user.userRole,
                     }
                 },
                 error: (err) => {

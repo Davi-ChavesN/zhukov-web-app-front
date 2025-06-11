@@ -73,7 +73,7 @@ export class MediaUpdatePageComponent {
     }
 
     onSubmit(form: NgForm) {
-        const media: UpdateMedia = {
+        const updateMedia: UpdateMedia = {
             id: this.mediaId,
             title: this.formData.title,
             description: this.media.description,
@@ -88,7 +88,7 @@ export class MediaUpdatePageComponent {
             genreIds: this.formData.genreIds,
         }
 
-        this.mediaService.mediaUpdate(media.id, media).subscribe({
+        this.mediaService.mediaUpdate(updateMedia.id, updateMedia).subscribe({
             next: (response) => {
                 this.toastr.success('Mídia atualizada com sucesso');
                 this.router.navigate(['/media', this.mediaId]);
