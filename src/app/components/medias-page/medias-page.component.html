@@ -24,7 +24,7 @@
                     </select>
                 </div>
             </div>
-            <div class="ms-3" *ngIf="authService.isLoggedIn() && authService.getLoggedUser()?.role === 'admin'">
+            <div class="ms-3" *ngIf="authService.isLoggedIn() && authService.getLoggedUser()?.role === 'admin' || authService.getLoggedUser()?.role === 'root' ">
                 <button class="btn btn-primary" (click)="goToCreateMediaPage()">Adicionar Nova Mídia</button>
             </div>
         </div>

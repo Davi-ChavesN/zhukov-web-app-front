@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User, UserService } from '../../services/user/user.service';
 import { FooterComponent } from "../footer/footer.component";
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
     selector: 'app-social-page',
@@ -18,6 +19,7 @@ export class SocialPageComponent implements OnInit {
     constructor(
         private userService: UserService,
         private router: Router,
+        readonly authService: AuthService,
     ) {
 
     }
@@ -35,5 +37,9 @@ export class SocialPageComponent implements OnInit {
 
     goToUserProfile(userId: string) {
         this.router.navigate(['user', userId]);
+    }
+
+    goToUserControl() {
+        this.router.navigate(['user-control']);
     }
 }

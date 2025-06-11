@@ -1,0 +1,49 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="body-bg min-vh-100 py-5 px-3 text-white">
+    <div class="container">
+        <h2 class="mb-4">Gerenciamento de Usuários</h2>
+
+        <table class="table table-dark table-striped table-bordered align-middle">
+            <thead>
+                <tr>
+                    <th>Nickname</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Função</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{ user.nickname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="user.status === 'active' ? 'bg-success' : 'bg-danger'">
+                            {{ user.status === 'active' ? 'Ativo' : 'Desativado' }}
+                        </span>
+                    </td>
+                    <td>
+                        <select [(ngModel)]="user.userRole" class="form-select bg-dark text-white border-secondary"
+                            [disabled]="user.userRole === 'root'" (ngModelChange)="updateUser(user)">
+
+                            <option *ngIf="user.userRole === 'root'" value="root" disabled>
+                                Root (não editável)
+                            </option>
+                            <option value="user">Usuário</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm" [ngClass]="user.status === 'active' ? 'btn-warning' : 'btn-success'"
+                            (click)="toggleStatus(user)">
+                            {{ user.status === 'active' ? 'Desativar' : 'Ativar' }}
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<app-footer></app-footer>

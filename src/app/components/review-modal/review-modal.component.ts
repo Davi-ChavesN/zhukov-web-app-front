@@ -97,10 +97,10 @@ export class ReviewModalComponent implements OnInit {
 
     verifyExistingReview() {
         this.reviewService.getReviewById(this.newReview.userId, this.newReview.mediaId).subscribe({
-            next: (data) => {
-                if (data) {
+            next: (response) => {
+                if (response) {
                     this.existingReview = true;
-                    this.newReview = data as Review;
+                    this.newReview = response as Review;
                 }
             },
             error: (err) => {

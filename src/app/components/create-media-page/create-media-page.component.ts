@@ -19,12 +19,15 @@ export class CreateMediaPageComponent implements OnInit {
     genresList: Genre[] = [];
     formData = {
         title: '',
+        description: '',
         director: '',
         releaseYear: 0,
         duration: 0,
         producer: '',
-        rating: '',
+        score: 0,
         posterUrl: '',
+        bannerUrl: '',
+        trailerUrl: '',
         genreIds: [] as string[],
     }
     touchedGenres: boolean = false;
@@ -44,16 +47,18 @@ export class CreateMediaPageComponent implements OnInit {
     onSubmit(form: NgForm) {
         const media: CreateMedia = {
             title: this.formData.title,
+            description: this.formData.description,
             director: this.formData.director,
             releaseYear: this.formData.releaseYear,
             duration: this.formData.duration,
             producer: this.formData.producer,
-            rating: this.formData.rating,
+            score: this.formData.score,
             posterUrl: this.formData.posterUrl,
+            bannerUrl: this.formData.bannerUrl,
+            trailerUrl: this.formData.trailerUrl,
             genreIds: this.formData.genreIds,
         }
 
-        console.log('Mídia criada: ', media);
         this.mediaService.mediaRegister(media).subscribe({
             next: (response) => {
                 this.toastr.success('Mídia registrada com sucesso');

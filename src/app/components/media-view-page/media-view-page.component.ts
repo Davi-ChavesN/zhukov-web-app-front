@@ -1,26 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { NavBarComponent } from "../nav-bar/nav-bar.component";
-import { ActivatedRoute, Router } from '@angular/router';
-import { Media, MediaService } from '../../services/media/media.service';
-import { Review, ReviewService } from '../../services/review/review.service';
 import { CommonModule } from '@angular/common';
-import { FooterComponent } from "../footer/footer.component";
-import { AuthService } from '../../services/auth/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ReviewModalComponent } from "../review-modal/review-modal.component";
+import { ActivatedRoute, Router } from '@angular/router';
+import { SafePipe } from '../../pipes/safe.pipe';
+import { AuthService } from '../../services/auth/auth.service';
+import { Media, MediaService, UpdateMedia } from '../../services/media/media.service';
+import { Review, ReviewService } from '../../services/review/review.service';
 import { UserService } from '../../services/user/user.service';
-import { firstValueFrom } from 'rxjs';
+import { FooterComponent } from "../footer/footer.component";
+import { NavBarComponent } from "../nav-bar/nav-bar.component";
+import { ReviewModalComponent } from "../review-modal/review-modal.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-media-view-page',
-    imports: [NavBarComponent, CommonModule, FooterComponent, FormsModule, ReviewModalComponent],
+    imports: [NavBarComponent, CommonModule, FooterComponent, FormsModule, ReviewModalComponent, SafePipe],
     templateUrl: './media-view-page.component.html',
     styleUrl: './media-view-page.component.scss'
 })
 export class MediaViewPageComponent implements OnInit {
 
     mediaId!: string;
-    media!: Media;
+    media: Media | null = null;
     reviewsList: Review[] = [];
     newReview: Review = {
         userId: '',
@@ -28,15 +29,17 @@ export class MediaViewPageComponent implements OnInit {
         score: 0,
         comment: '',
     }
+    updateMedia!: UpdateMedia;
     userNicknames: { [userId: string]: string } = {};
 
     constructor(
-        private route: ActivatedRoute,
-        private mediaService: MediaService,
-        private reviewService: ReviewService,
-        private userService: UserService,
+        private readonly route: ActivatedRoute,
+        private readonly mediaService: MediaService,
+        private readonly reviewService: ReviewService,
+        private readonly userService: UserService,
         readonly authService: AuthService,
-        private router: Router,
+        private readonly router: Router,
+        private readonly toastr: ToastrService,
     ) { }
 
     ngOnInit(): void {
@@ -58,6 +61,41 @@ export class MediaViewPageComponent implements OnInit {
     refreshReviews() {
         this.reviewService.getAllMediaReviews(this.mediaId).subscribe((reviews) => {
             this.reviewsList = reviews;
+
+            if (!this.media) {
+                return;
+            }
+
+            if (this.reviewsList.length > 0) {
+                this.media.score = 0;
+                for (const review of this.reviewsList) {
+                    this.media.score += review.score;
+                }
+                this.media.score = this.media.score / this.reviewsList.length;
+
+                this.updateMedia = {
+                    id: this.media.id,
+                    title: this.media.title,
+                    description: this.media.description,
+                    director: this.media.director,
+                    releaseYear: this.media.releaseYear,
+                    duration: this.media.duration,
+                    producer: this.media.producer,
+                    score: this.media.score,
+                    posterUrl: this.media.posterUrl,
+                    bannerUrl: this.media.bannerUrl,
+                    trailerUrl: this.media.trailerUrl,
+                    genreIds: this.media.genreIds,
+                };
+
+                this.mediaService.mediaUpdate(this.media.id, this.updateMedia).subscribe({
+                    next: (response) => {
+                    },
+                    error: (err) => {
+                        console.error(err);
+                    }
+                });
+            }
         });
     }
 
@@ -67,7 +105,11 @@ export class MediaViewPageComponent implements OnInit {
         } else {
             this.userService.getUserById(userId).subscribe({
                 next: (user) => {
-                    this.userNicknames[userId] = user.nickname;
+                    if (user.status === 'active') {
+                        this.userNicknames[userId] = user.nickname;
+                    } else {
+                        this.userNicknames[userId] = 'Usuário Desativado'
+                    }
                 },
                 error: (err) => {
                     console.error(`Erro ao buscar nickname do usuário ${userId}:`, err);
@@ -75,12 +117,30 @@ export class MediaViewPageComponent implements OnInit {
                 }
             });
 
-            // Return a fallback value while the real one loads
             return 'Carregando...';
         }
     }
 
     goToUserProfile(userId: string) {
-        this.router.navigate(['user', userId]);
+        this.userService.getUserById(userId).subscribe({
+            next: (user) => {
+                if (user.status === 'active') {
+                    this.router.navigate(['user', userId]);
+                } else {
+                    this.toastr.warning("Perfil indisponível");
+                }
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
     }
+
+    getYoutubeEmbedUrl(): string {
+        if (!this.media?.trailerUrl) return '';
+
+        const videoId = this.media.trailerUrl.split('v=')[1]?.split('&')[0];
+        return videoId ? `https://www.youtube.com/embed/${videoId}` : '';
+    }
+
 }

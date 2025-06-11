@@ -10,7 +10,7 @@
             <form (ngSubmit)="onSubmit()" class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">Nota</label>
-                    <input type="number" [(ngModel)]="newReview.score" name="score" class="form-control" min="0" max="10"
+                    <input type="number" [(ngModel)]="newReview.score" name="score" class="form-control" min="0" max="10" step="0.5"
                         required />
                 </div>
                 <div class="mb-3">

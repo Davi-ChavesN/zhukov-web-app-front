@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 import { Genre, GenreService } from '../../services/genre/genre.service';
 import { Media, MediaService, UpdateMedia } from '../../services/media/media.service';
 import { FooterComponent } from "../footer/footer.component";
 import { GenreModalComponent } from "../genre-modal/genre-modal.component";
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
-import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'app-media-update-page',
@@ -23,14 +23,18 @@ export class MediaUpdatePageComponent {
     media!: Media;
     formData = {
         title: '',
+        description: '',
         director: '',
         releaseYear: 0,
         duration: 0,
         producer: '',
-        rating: '',
+        score: 0,
         posterUrl: '',
+        bannerUrl: '',
+        trailerUrl: '',
         genreIds: [] as string[],
     }
+    touchedGenres: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -52,12 +56,15 @@ export class MediaUpdatePageComponent {
 
             this.formData = {
                 title: this.media.title,
+                description: this.media.description,
                 director: this.media.director,
                 releaseYear: this.media.releaseYear,
                 duration: this.media.duration,
                 producer: this.media.producer,
-                rating: this.media.rating,
+                score: this.media.score,
                 posterUrl: this.media.posterUrl,
+                bannerUrl: this.media.bannerUrl,
+                trailerUrl: this.media.trailerUrl,
                 genreIds: this.media.mediaGenres
                     .map(name => genres.find(g => g.description === name)?.id)
                     .filter(id => !!id) as string[]
@@ -66,20 +73,22 @@ export class MediaUpdatePageComponent {
     }
 
     onSubmit(form: NgForm) {
-        const media: UpdateMedia = {
+        const updateMedia: UpdateMedia = {
             id: this.mediaId,
             title: this.formData.title,
+            description: this.media.description,
             director: this.formData.director,
             releaseYear: this.formData.releaseYear,
             duration: this.formData.duration,
             producer: this.formData.producer,
-            rating: this.formData.rating,
+            score: this.formData.score,
             posterUrl: this.formData.posterUrl,
+            bannerUrl: this.media.bannerUrl,
+            trailerUrl: this.media.trailerUrl,
             genreIds: this.formData.genreIds,
         }
 
-        console.log('Mídia criada: ', media);
-        this.mediaService.mediaUpdate(media.id, media).subscribe({
+        this.mediaService.mediaUpdate(updateMedia.id, updateMedia).subscribe({
             next: (response) => {
                 this.toastr.success('Mídia atualizada com sucesso');
                 this.router.navigate(['/media', this.mediaId]);

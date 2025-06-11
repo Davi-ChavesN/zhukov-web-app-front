@@ -23,21 +23,40 @@
   display: inline-block;
 }
 
-.preview-image {
-  max-width: 200px;
-  height: auto;
-  border-radius: 0.5rem;
+.header {
+  background-color: #181d27;
+  min-height: 300px;
+  color: white;
 }
 
-// .ng-select {
-//   background-color: #fff;
-//   border-radius: 6px;
-// }
+.container-preview {
+  margin-left: 5%;
+  margin-right: 5%;
+  display: grid;
+  column-gap: 30px;
+  grid-template-columns: 215px auto;
+}
 
-// .ng-select .ng-select-container {
-//   min-height: 40px;
-// }
+.description-preview {
+  
+}
 
-// .ng-select .ng-clear-wrapper {
-//   display: none;
-// }
+.media-banner {
+  background-position: 50% 35%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+  z-index: 1;
+}
+
+.media-poster {
+  position: relative;
+  top: -80px;
+  z-index: 2;
+}
+
+.poster-img {
+  width: 200px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+}
