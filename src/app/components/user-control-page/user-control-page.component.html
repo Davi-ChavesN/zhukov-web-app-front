@@ -18,7 +18,7 @@
                 <tr *ngFor="let user of users">
                     <td>{{ user.nickname }}</td>
                     <td>{{ user.email }}</td>
-                    <td>
+                    <td class="text-center">
                         <span class="badge" [ngClass]="user.status === 'active' ? 'bg-success' : 'bg-danger'">
                             {{ user.status === 'active' ? 'Ativo' : 'Desativado' }}
                         </span>
@@ -34,7 +34,7 @@
                             <option value="admin">Administrador</option>
                         </select>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <button class="btn btn-sm" [ngClass]="user.status === 'active' ? 'btn-warning' : 'btn-success'"
                             (click)="toggleStatus(user)">
                             {{ user.status === 'active' ? 'Desativar' : 'Ativar' }}

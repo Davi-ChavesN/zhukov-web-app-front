@@ -14,7 +14,7 @@
                         <h2>{{ media.title }}</h2>
                     </div>
                     <div>
-                        <button *ngIf="authService.isLoggedIn() && authService.getLoggedUser()?.role === 'admin'"
+                        <button *ngIf="authService.isLoggedIn() && authService.getLoggedUser()?.role === 'admin' || 'root'"
                             class="btn btn-outline-light btn-sm ms-auto" (click)="goToEditPage(media.id)">
                             Editar Mídia
                         </button>
@@ -38,7 +38,7 @@
             <p><strong>Duração: </strong> {{media.duration}} min </p>
             <p><strong>Diretor: </strong> {{media.director}} </p>
             <p><strong>Produtor: </strong> {{media.producer}} </p>
-            <p><strong>Nota: </strong> {{reviewsList.length > 0 ? media.score : '---'}} </p>
+            <p><strong>Nota: </strong> {{reviewsList.length > 0 ? media.score.toFixed(2) : '---'}} </p>
             <div *ngIf="media.mediaGenres?.length" class="mt-2">
                 <strong class="me-1">Gêneros:</strong>
                 <span *ngFor="let genre of media.mediaGenres" class="badge bg-primary me-1">
